@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tune Tally</title>
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="../stylesheets/main.css" rel="stylesheet" type="text/css" />
+    <script src="https://use.fontawesome.com/d7de585d6e.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+    <script src="/scripts/createpoll.js"></script>
+  </head>
+  <body>
+    <% include ../partials/nav %>
+    <% include ../partials/error_alert %>
+    <div class="container">
+      <div class="content-container--header">
+        <h1 class="logo">Tune Tally</h1>
+        <h2 class="subheading">Create Poll</h2>
+      </div>
+      <div class="content-container__hcenter">
+        <form onsubmit="return false" class="form--createpoll" id="create-poll" autocomplete="off">
+          <div class="form-group">
+            <label for="title">*Title</label>
+            <input type="text" id="title" name="title" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="ends">*Ends In</label>
+            <select class="custom-select" id="ends" name="ends" required>
+              <option value="day" selected>1 Day</option>
+              <option value="week">1 Week</option>
+              <option value="month">1 Month</option>
+              <option value="custom-deadline">Custom Deadline</option>
+            </select>
+          </div>
+          <div class="form-group" id="form-group--deadline">
+            <label for="deadline">*Deadline (format: mm/dd/yyyy hh:mmAM/PM)</label>
+            <input type="text" name="deadline" class="form-control input--datetime" disabled>
+          </div>
+          <div class="form-group">
+            <label for="max-votes">*Max votes allowed</label>
+            <input type="number" name="max-votes" class="form-control input--number" required>
+          </div>
+          <div class="form-group">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="open-add" name="open-add" value='true'>
+              <label class="custom-control-label" for="open-add">Allow participants to add songs to poll?</label>
+            </div>
+            <div class="sub-input">
+              <div class="custom-control custom-checkbox content-container--spotify-enforced">
+                <input type="checkbox" class="custom-control-input" id="spotify-enforced" name="spotify-enforced" value='true'>
+                <label class="custom-control-label" for="spotify-enforced">Require songs to be available from Spotify?</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="enforce-login" name="enforce-login" value="true">
+              <label class="custom-control-label" for="enforce-login">Require Participants to be Logged In?</label>
+            </div>
+            <div class="form-group" id="login-options">
+              Permit which login types?
+              <div class="sub-input">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="all-login" name="login-option" value="all-login">
+                  <label class="custom-control-label" for="all-login">All</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input login-option" id="twitter-login" name="login-option" value="twitter-login">
+                  <label class="custom-control-label" for="twitter-login">Twitter</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input login-option" id="facebook-login" name="login-option" value="facebook-login">
+                  <label class="custom-control-label" for="facebook-login">Facebook</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input login-option" id="google-login" name="login-option" value="google-login">
+                  <label class="custom-control-label" for="google-login">Google</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input login-option" id="reddit-login" name="login-option" value="reddit-login">
+                  <label class="custom-control-label" for="reddit-login">Reddit</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input login-option" id="local-login" name="login-option" value="local-login">
+                  <label class="custom-control-label" for="local-login">Username / Password</label>
+                </div>
+              </div>
+            </div>
+            <div class="content-container--form-buttons">
+              <button class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

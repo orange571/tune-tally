@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tune Tally</title>
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="/../stylesheets/main.css" rel="stylesheet" type="text/css" />
+    <link href="/../stylesheets/typeahead-styles.css" rel="stylesheet" type="text/css"/>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+    <script src="/scripts/typeahead.bundle.js"></script>
+    <script src="/scripts/vote.js"></script>
+    <script type='text/javascript'>
+      var data =<%-JSON.stringify(data)%>;
+      console.log(data);
+    </script>
+  </head>
+  <body>
+    <% include ../partials/nav %>
+    <% include ../partials/error_alert %>
+    <div class="container">
+      <div class="content-container--header">
+        <h1 class="subheading poll-title">Vote for: <%= data.title %></h1>
+        <p class="ending-time">Poll ends on <span class='bold'> <%= data.deadline.toLocaleDateString() %> </span></p>
+      </div>
+      <div class="content-container__hcenter">
+        <div class="content-container--vote-form">
+          <div class="votes-remaining">You have &nbsp;&nbsp; votes remaining</div>
+          <div class="content-container poll-header">
+            <div class="row">
+              <div class='col-md-4 header-artist'>Artist</div><div class='col-md-6 header-title'>Song Title</div>
+            </div>
+          </div>
+          <form class="form--submitvote" id="submit-vote" onsubmit="return false">
+            <div class="content-container poll-list">
+              <div class="registered-songs end-list">
+                <% if(data.songs.length === 0 ){ %>
+                  <div class="empty-error">No songs in this poll for now</div>
+                <% } else { %>
+                  <%data.songs.forEach(function(song){ %>
+                      <div class="song-item row">
+                         <div class="custom-control custom-checkbox">
+                           <input type='checkbox' class='custom-control-input' id='<%= song._id %>'>
+                           <label for='<%= song._id %>' class='song-item-info row custom-control-label'>
+                             <div class='col-md-5'><%= song.artist %></div>
+                             <div class='col-md-7'><%= song.title %></div>
+                           </label>
+                         </div>
+                         <% if(currentUser && data.author.equals(currentUser._id) || currentUser.isAdmin){ %>
+                           <div class='remove-container'>
+                             <button class='btn btn-danger btn-sm remove-song' data-songId="<%=song._id%>">Remove</button>
+                           </div>
+                         <% } else {%>
+                           <div class='remove-container'>
+
+                           </div>
+                         <% } %>
+                       </div>
+                  <% }); %>
+                <% } %>
+              </div>
+              <div class="user-submitted-songs"></div>
+            </div>
+            <div class="content-container--form-buttons">
+              <a href="/polls/<%=data._id%>/r" class="btn btn-info">View Results</a>
+              <button class="btn btn-success">
+                Submit Your Vote!
+              </button>
+            </div>
+          </form>
+          <% if(currentUser && data.author.equals(currentUser._id) || currentUser.isAdmin){ %>
+              <form id="delete-form" action="/polls/<%= data._id %>?_method=DELETE" method="POST" class="content-container--delete">
+                  <button class="btn btn-danger">Delete Poll Permanently</button>
+              </form>
+          <% }%>
+        </div>
+        <div class="content-container--add-song">
+          <h3 class="form-header">
+            You are welcome to add songs to the poll.
+          </h3>
+          <form class="form--viewpoll vote" id="add-song-form" autocomplete="off">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="add-artist">Artist</label>
+                <input type="text" class="form-control" id="add-artist" name="add-artist" placeholder="Artist" autofocus required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="add-title">Song Title</label>
+                <input type="text" class="form-control" id="add-title" name="add-title" placeholder="Title" required>
+              </div>
+              <div class="form-group col-md-2 content-container--add-song-button">
+                <button type="button" id="add-song" class="btn btn-primary">Add</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

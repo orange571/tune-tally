@@ -1,0 +1,27 @@
+<header>
+  <nav>
+    <a class="logo-link" href="/">
+      <div class="logo">
+        Tune Tally
+      </div>
+    </a>
+    <div class="login-options">
+      <% if(!currentUser){ %>
+        <a class="btn btn-sm btn-primary" href="/register">
+          Sign Up
+        </a>
+        <a class="btn btn-link btn-login" href="/login">
+          Login
+        </a>
+      <% } else { %>
+        <div class="">Signed In As <%= currentUser.username %></div>
+        <div class="">
+             <a class="btn btn-sm btn-success" href="/dashboard">Go To Portal</a>
+         </div>
+        <div class="">
+          <a class="btn btn-link" href="/logout">Log Out</a>
+        </div>
+      <% } %>
+    </div>
+  </nav>
+</header>
