@@ -10,10 +10,10 @@ var UserSchema = new mongoose.Schema({
        ref: "Poll"
       }
     ],
-    participantPolls: [
+    participantVotes: [
       {
        type: mongoose.Schema.Types.ObjectId,
-       ref: "Poll"
+       ref: "Vote"
       }
     ]
 });

@@ -47,11 +47,11 @@
           </div>
           <div class="participant-polls">
             <h3>Polls You Voted In</h3>
-            <% if(data.participantPolls.length === 0 ){ %>
+            <% if(data.participantVotes.length === 0 ){ %>
               <div class="empty-error">You haven't voted in any polls yet</div>
             <% } else { %>
-              <%data.participantPolls.forEach(function(poll){ %>
-                  <a href="#">
+              <%data.participantVotes.forEach(function(poll){ %>
+                  <a href="/polls/<%=poll._id%>">
                     <div class="poll-summary">
                       <h3><%= poll.title %></h3>
                       <p class="deadline">Ends <%=poll.deadline%></p>
@@ -61,8 +61,6 @@
             <% } %>
           </div>
         </div>
-
-
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

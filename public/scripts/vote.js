@@ -124,11 +124,11 @@ $(function(){
       }).get();
       result.newSongs = newSongs;
       result.now = moment().toISOString();
-      alert(JSON.stringify(result));
+      //alert(JSON.stringify(result));
       $('#submit-vote').append("<div id='loader-overlay'><img src='/images/transparent-loader.gif' alt='loader'></div>");
       $.ajax({
         type: "POST",
-        timeout: 5000,
+        timeout:25000,
         url: 'http://localhost:3000/polls/' + data._id + '/vote',
         data: JSON.stringify(result),
         success: function(data) {
@@ -155,7 +155,7 @@ $(function(){
     $(this).append("<div id='loader-overlay'><img src='/images/transparent-loader.gif' alt='loader'></div>");
     $.ajax({
       type: "DELETE",
-      timeout: 5000,
+      timeout: 25000,
       url: 'http://localhost:3000/polls/' + data._id + '/song/' + songId,
       success: function(data) {
         if (data.status === "Success") {

@@ -7,7 +7,7 @@ var songSchema = new mongoose.Schema({
    votes: [
      {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: "Vote"
      }
    ],
    author: {

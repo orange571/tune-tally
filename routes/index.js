@@ -4,6 +4,7 @@ var passport = require("passport");
 var User = require("../models/user");
 var Poll = require("../models/poll");
 var Song = require("../models/song");
+var Vote = require("../models/vote");
 var middleware = require("../middleware");
 
 //root route
@@ -62,14 +63,14 @@ router.get("/dashboard", middleware.isLoggedIn, function(req, res){
     User
       .findById(req.user._id)
       .populate({path:"authoredPolls"})
-      .populate({path:"participantPolls"})
+      .populate({path:"participantVotes", populate: {path: "poll"}})
       .exec(function(err,foundUser){
         if(err) {
           console.log(err)
         } else {
           console.log(foundUser);
           var authoredPolls = [];
-          var participantPolls = [];
+          var participantVotes = [];
           var username = foundUser.username;
           foundUser.authoredPolls.forEach(function(poll){
             var pollData = {};
@@ -77,17 +78,20 @@ router.get("/dashboard", middleware.isLoggedIn, function(req, res){
             pollData._id = poll._id;
             pollData.songCount = poll.songs.length;
             pollData.deadline = poll.deadline;
+            pollData.createdAt = poll.createdAt;
             authoredPolls.push(pollData);
           });
-          foundUser.participantPolls.forEach(function(poll){
+          foundUser.participantVotes.forEach(function(vote){
             var pollData = {};
-            pollData.title = poll.title;
-            pollData._id = poll._id;
-            pollData.songCount = poll.songs.length;
-            pollData.deadline = poll.deadline;
-            participantPolls.push(pollData);
+            pollData.title = vote.poll.title;
+            pollData._id = vote.poll._id;
+            pollData.songCount = vote.poll.songs.length;
+            pollData.deadline = vote.poll.deadline;
+            pollData.lastInteraction = vote.createdAt;
+            participantVotes.push(pollData);
           });
-          var foundUserPollData = {username: username, authoredPolls: authoredPolls, participantPolls: participantPolls};
+          participantVotes
+          var foundUserPollData = {username: username, authoredPolls: authoredPolls, participantVotes: participantVotes};
           res.render("dashboard", {data: foundUserPollData});
         }
       })
