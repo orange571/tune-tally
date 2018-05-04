@@ -90,12 +90,27 @@ router.get("/dashboard", middleware.isLoggedIn, function(req, res){
             pollData.lastInteraction = vote.createdAt;
             participantVotes.push(pollData);
           });
-          participantVotes
+          participantVotes.sort(comparelastInteraction);
+          authoredPolls.sort(compareDateCreated);
           var foundUserPollData = {username: username, authoredPolls: authoredPolls, participantVotes: participantVotes};
           res.render("dashboard", {data: foundUserPollData});
         }
       })
 });
+
+function comparelastInteraction(a, b) {
+  //Returns recent date first
+  var dateA = new Date(a.lastInteraction);
+  var dateB = new Date(b.lastInteraction);
+  return dateB - dateA;
+}
+
+function compareDateCreated(a,b) {
+  //Returns recent date first
+  var dateA = new Date(a.createdAt);
+  var dateB = new Date(b.createdAt);
+  return dateB - dateA;
+}
 
 router.get("/searchpage", function(req, res){
   res.render("search")
