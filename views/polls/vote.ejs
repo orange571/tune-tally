@@ -44,7 +44,7 @@
                   <%data.songs.forEach(function(song){ %>
                       <div class="song-item row">
                          <div class="custom-control custom-checkbox">
-                           <input type='checkbox' class='custom-control-input' id='<%= song._id %>'>
+                           <input type='checkbox' class='custom-control-input' id='<%= song._id %>'  <%= song.checked ? "checked": "" %>>
                            <label for='<%= song._id %>' class='song-item-info row custom-control-label'>
                              <div class='col-md-5'><%= song.artist %></div>
                              <div class='col-md-7'><%= song.title %></div>

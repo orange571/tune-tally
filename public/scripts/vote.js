@@ -173,47 +173,78 @@ $(function(){
     });
   })
 //TYPEAHEAD
-  var substringMatcher = function(strs) {
-    return function findMatches(q, cb) {
-      var matches, substringRegex;
-
-      // an array that will be populated with substring matches
-      matches = [];
-
-      // regex used to determine if a string contains the substring `q`
-      substrRegex = new RegExp(q, 'i');
-
-      // iterate through the pool of strings and for any string that
-      // contains the substring `q`, add it to the `matches` array
-      $.each(strs, function(i, str) {
-        if (substrRegex.test(str)) {
-          matches.push(str);
+/**  $('#add-artist').typeahead({
+    name : 'artist',
+    remote: {
+        url : 'http://localhost:3000/search?key=%QUERY',
+        filter: function (artists) {
+            // Map the remote source JSON array to a JavaScript object array
+            return $.map(artists, function (artist) {
+                return {
+                    value: artist.name
+                };
+            });
         }
-      });
+    },
+    limit: 10
+  });**/
 
-      cb(matches);
-    };
-  };
+  // Instantiate the Bloodhound suggestion engine
+  var artists = new Bloodhound({
+    datumTokenizer: function(datum) {
+      return Bloodhound.tokenizers.whitespace(datum.value);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      wildcard: '%QUERY',
+      url: 'http://localhost:3000/artist?key=%QUERY',
+      transform: function(artists) {
+        console.log(artists);
+        // Map the remote source JSON array to a JavaScript object array
+        return $.map(artists, function (artist) {
+          console.log(artist.name);
+            return {
+                value: artist.name
+            };
+        });
+      }
+    }
+  });
 
-  var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-    'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-    'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-    'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-    'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-    'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-    'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-    'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-    'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-  ];
+  // Instantiate the Typeahead UI
+  $('#add-artist').typeahead(null, {
+    display: 'value',
+    source: artists
+  });
 
-  $('.form--viewpoll input').typeahead({
-    hint: true,
-    highlight: true,
-    minLength: 1
-  },
-  {
-    name: 'states',
-    source: substringMatcher(states)
+  var titles = new Bloodhound({
+    datumTokenizer: function(datum) {
+      return Bloodhound.tokenizers.whitespace(datum.value);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      wildcard: '%QUERY',
+      url: 'http://localhost:3000/title?key=%QUERY',
+      transform: function(titles) {
+        console.log(titles);
+        // Map the remote source JSON array to a JavaScript object array
+        return $.map(titles, function (title) {
+          console.log(title.name);
+          console.log("artist");
+          console.log(title.artists);
+            return {
+                value: title.name + " - " + title.artists[0].name
+            };
+        });
+      }
+    }
+  });
+
+  // Instantiate the Typeahead UI
+  $('#add-title').typeahead(null, {
+    display: 'value',
+    source: titles,
+    limit: Infinity
   });
 
   //VALIDATION

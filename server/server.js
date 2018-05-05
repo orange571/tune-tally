@@ -71,7 +71,7 @@ var authOptions = {
   json: true
 };
 
-app.get('/search',function(req,res){
+app.get('/artist',function(req,res){
   console.log("recieved request");
   console.log(req.query);
   request.post(authOptions, function(error, response, body) {
@@ -88,6 +88,28 @@ app.get('/search',function(req,res){
       request.get(options, function(error, response, body) {
         console.log(body.artists.items);
         res.end(JSON.stringify(body.artists.items));
+      });
+    }
+  });
+});
+
+app.get('/title',function(req,res){
+  console.log("recieved request");
+  console.log(req.query);
+  request.post(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      // use the access token to access the Spotify Web API
+      var token = body.access_token;
+      var options = {
+        url: 'https://api.spotify.com/v1/search?q=' + req.query.key + '&type=track&limit=3',
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
+        json: true
+      };
+      request.get(options, function(error, response, body) {
+        console.log(body.tracks.items);
+        res.end(JSON.stringify(body.tracks.items));
       });
     }
   });

@@ -346,22 +346,97 @@ router.get("/:id/r", function(req,res){
     })
 });
 
+function fetchVoteSongs(voteId){
+  return new Promise(function(resolve, reject){
+    Vote.findById(voteId, function(err, foundVote){
+      if(err){
+        console.log(err);
+        throw new Error(err);
+      }else {
+        console.log(foundVote);
+        var songArray = foundVote.songs;
+        console.log(songArray);
+        resolve(songArray);
+      }
+    });
+  });
+}
+
+function fetchPoll(pollId){
+  return new Promise(function(resolve, reject){
+      Poll.
+          findById(pollId)
+          .populate({path:"songs"})
+          .exec(function(err, foundPoll){
+              if(err){
+                  console.log(err);
+              } else {
+                  console.log(JSON.stringify(foundPoll, null, "\t"));
+                  resolve(foundPoll);
+              }
+          });
+  });
+}
+
 // SHOW - shows more info about one poll
 router.get("/:id", middleware.isLoggedIn,  function(req, res){
-  Poll.
-      findById(req.params.id)
-      .populate({path:"songs"})
-      .exec(function(err, foundPoll){
-          if(err){
-              console.log(err);
-          } else {
-              console.log("This is the poll");
-              console.log(JSON.stringify(foundPoll, null, "\t"))
-              //render show template with that announcement
-              console.log("This is the poll");
-              res.render("polls/vote", {data: foundPoll});
+  User.findById(req.user._id).populate({path:"participantVotes"}).exec(function(err, foundUser){
+    if(err) {
+      console.log(err)
+    } else {
+      console.log(foundUser);
+      if(foundUser.participantVotes.length === 0 ){
+        fetchPoll(req.params.id).then(function(foundPoll){
+          res.render("polls/vote", {data: foundPoll});
+        }).catch(function(err){
+          console.log(err);
+        })
+      } else {
+        var voteId = "";
+        foundUser.participantVotes.forEach(function(vote){
+          if(vote.poll == req.params.id){
+            console.log("found A match");
+            voteId = vote._id;
           }
-      });
+        });
+        if(voteId !== ""){
+          console.log("fetch Vote Songs", voteId);
+          var foundSongArray = []
+          fetchVoteSongs(voteId).then(function(songArray){
+            foundSongArray = songArray;
+            console.log("songArray", songArray);
+            return fetchPoll(req.params.id);
+          }).then(function(foundPoll){
+            var pollData = JSON.parse(JSON.stringify(foundPoll));
+            pollData.deadline = foundPoll.deadline;
+            pollData.author = foundPoll.author;
+            console.log(foundSongArray);
+            pollData.songs.forEach(function(song){
+              console.log(song._id);
+              var match = false;
+              foundSongArray.forEach(function(checkedSong){
+                if(song._id == checkedSong){
+                  match = true;
+                }
+              })
+              song.checked = match;
+            })
+            console.log(pollData);
+            res.render("polls/vote", {data: pollData});
+          }).catch(function(err){
+            console.log(err);
+          })
+        }else {
+          fetchPoll(req.params.id).then(function(foundPoll){
+            res.render("polls/vote", {data: foundPoll});
+          }).catch(function(err){
+            console.log(err);
+          })
+        }
+      }
+
+    }
+  })
 });
 
 
