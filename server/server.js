@@ -79,7 +79,7 @@ app.get('/artist',function(req,res){
       // use the access token to access the Spotify Web API
       var token = body.access_token;
       var options = {
-        url: 'https://api.spotify.com/v1/search?q=' + req.query.key + '&type=artist&limit=3',
+        url: 'https://api.spotify.com/v1/search?q=artist:' + req.query.key + '&type=artist&limit=10',
         headers: {
           'Authorization': 'Bearer ' + token
         },
@@ -101,7 +101,7 @@ app.get('/title',function(req,res){
       // use the access token to access the Spotify Web API
       var token = body.access_token;
       var options = {
-        url: 'https://api.spotify.com/v1/search?q=' + req.query.key + '&type=track&limit=3',
+        url: 'https://api.spotify.com/v1/search?q=' + req.query.key + '&type=track&limit=10',
         headers: {
           'Authorization': 'Bearer ' + token
         },

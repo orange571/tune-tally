@@ -183,7 +183,7 @@ form {
   font-style: italic;
 }
 
-.form--viewpoll.vote, .form--submitvote {
+.form--viewpoll.vote, .form--submitvote, .form--initializepoll {
   width: 100%;
   max-width: 700px;
 }
@@ -294,9 +294,10 @@ form {
   .song-item.row {
     flex-wrap: nowrap;
   }
+  /**
   .song-item-info.row{
     max-width: 80%
-  }
+  }**/
   .poll-list .custom-control.custom-checkbox {
     max-width: 87%
   }
@@ -576,4 +577,14 @@ label.error {
   width: 50%;
   max-width: 200px;
   z-index: 20;
+}
+
+.content-container__share-url input{
+  width: 15rem;
+  font-size: 0.8rem;
+  padding: 1px 3px;
+}
+
+.share-url-button {
+  font-size: 0.8rem;
 }

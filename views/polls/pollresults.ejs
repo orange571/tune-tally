@@ -41,9 +41,9 @@
                     </div>
                     <div class="song-item-bar">
                       <div class="content-container-percentage-bar">
-                        <div class="percentage-bar" style="width:<%= Math.round((song.voteCount * 100)/ data.total)%>%"></div>
+                        <div class="percentage-bar" style="width:<%= song.voteCount == 0 ? 0 : Math.round((song.voteCount * 100)/ data.total)%>%"></div>
                       </div>
-                      <div class="percentage"><%= Math.round((song.voteCount * 100)/ data.total) %>%</div>
+                      <div class="percentage"><%= song.voteCount == 0 ? 0 : Math.round((song.voteCount * 100)/ data.total) %>%</div>
                     </div>
                   </div>
                 <% }); %>
@@ -57,14 +57,12 @@
             <button class="btn btn-secondary share-popover" data-toggle="popover"><i class="fas fa-share"></i> Share</button>
             <div class="popper-content d-none">
               <div class="social-links">
-                <a class="twitter-link" href="#" target="_blank">Twitter</a>
-                <a class="fb-link" href="#">Facebook</a>
-                <a class="reddit-link" href="#">Reddit</a>
+                <a class="twitter-link" href="https://twitter.com/intent/tweet?text=<%= encodeURI(data.title) %>&url=http://www.tunetally.com/<%=data.pollId%>" target="_blank">Twitter</a>
               </div>
              <div class="local-links">
                <label>URL
                  <div>
-                   <input class="poll-link" type="text" value=""/>
+                   <input class="poll-link" type="text" value="/polls/<%= data.pollId %>"/>
                    <button class="btn btn-dark copy-poll-link">Copy</button>
                  </div>
               </label>

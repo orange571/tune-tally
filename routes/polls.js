@@ -13,12 +13,8 @@ router.get("/", middleware.isLoggedIn, function(req, res){
 
 //CREATE - create poll
 router.post("/createpoll", middleware.isLoggedIn, function(req, res){
-	console.log('body: ' + JSON.stringify(req.body));
-  console.log(req.body);
   var newPoll = JSON.parse(JSON.stringify(req.body));
   var title = req.body.title;
-  var author = req.user._id;
-  var maxVotes = req.body.maxVotes;
   newPoll.author = req.user._id;
   //Check for leading or trailing whitespace
   newPoll.title = req.body.title.replace(/^\s+/, '').replace(/\s+$/, '');
@@ -43,8 +39,48 @@ router.post("/createpoll", middleware.isLoggedIn, function(req, res){
             foundUser.authoredPolls.push(pollId);
             foundUser.save();
           })
-          res.json({status: "Success", redirect: "/polls/"+pollId});
+          res.json({status: "Success", redirect: "initializepoll/"+pollId});
       }
+  });
+});
+
+router.get("/initializepoll/:id", middleware.isLoggedIn, middleware.checkPollOwnership, function(req, res){
+  console.log("Test2")
+  Poll.findById(req.params.id).populate({path: "songs"}).exec(function(err,foundPoll){
+      if(err) {
+        console.log(err)
+      } else {
+        res.render("polls/initializepoll", {data: foundPoll});
+      }
+  });
+});
+
+router.post("/initializepoll/:id", middleware.isLoggedIn, middleware.checkPollOwnership, function(req, res){
+  Poll.findById(req.params.id, function(err, foundPoll){
+    if(err){
+      console.log(err);
+    } else {
+        var newSongCounter = 0;
+        req.body.newSongs.forEach(function(newSong){
+          newSong.author =  req.user._id;
+          if(newSong.checked){
+            newSong.votes = [ newVoteId ];
+          }
+          Song.create(newSong, function(err, newlyCreatedSong){
+            if(err){
+                console.log(err);
+            } else {
+                console.log(newlyCreatedSong);
+                foundPoll.songs.push(newlyCreatedSong._id);
+                newSongCounter++;
+                if( newSongCounter === req.body.newSongs.length) {
+                  foundPoll.save();
+                  res.json({status: "Success", redirect: "/polls/"+req.params.id});
+                }
+            }
+          });
+        });
+    }
   });
 });
 
@@ -226,7 +262,9 @@ function handleNewSongs(newVoteId, pollId, userId, newSongArray) {
                 } else {
                     console.log(newlyCreatedSong);
                     foundPoll.songs.push(newlyCreatedSong._id);
-                    foundVote.songs.push(newlyCreatedSong._id);
+                    if(newSong.checked) {
+                      foundVote.songs.push(newlyCreatedSong._id);
+                    }
                     newSongCounter++;
                     if( newSongCounter === newSongArray.length) {
                       foundPoll.save();

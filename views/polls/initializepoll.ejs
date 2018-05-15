@@ -13,7 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
     <script src="/scripts/typeahead.bundle.js"></script>
-    <script src="/scripts/vote.js"></script>
+    <script src="/scripts/initialize.js"></script>
     <script type='text/javascript'>
       var data =<%-JSON.stringify(data)%>;
       console.log(data);
@@ -24,18 +24,22 @@
     <% include ../partials/error_alert %>
     <div class="container">
       <div class="content-container--header">
-        <h1 class="subheading poll-title">Vote for: <%= data.title %></h1>
+        <h1 class="subheading poll-title">Initialize Poll for: <%= data.title %></h1>
         <p class="ending-time">Poll ends on <span class='bold'> <%= data.deadline.toLocaleDateString() %> </span></p>
+        <p class="content-container__share-url">
+          <label for="share-url">Share poll with this URL:</label>
+          <input type="text" id="share-url" value="http://localhost:3000/polls/<%= data._id %>" />
+          <button class="share-url-button" data-copytarget="#share-url">copy</button>
+        </p>
       </div>
       <div class="content-container__hcenter">
         <div class="content-container--vote-form">
-          <div class="votes-remaining">You have &nbsp;&nbsp; votes remaining</div>
           <div class="content-container poll-header">
             <div class="row">
               <div class='col-md-4 header-artist'>Artist</div><div class='col-md-6 header-title'>Song Title</div>
             </div>
           </div>
-          <form class="form--submitvote" id="submit-vote" onsubmit="return false">
+          <form class="form--initializepoll" id="initialize-poll" onsubmit="return false">
             <div class="content-container poll-list">
               <div class="registered-songs end-list">
                 <% if(data.songs.length === 0 ){ %>
@@ -43,13 +47,10 @@
                 <% } else { %>
                   <%data.songs.forEach(function(song){ %>
                       <div class="song-item row">
-                         <div class="custom-control custom-checkbox">
-                           <input type='checkbox' class='custom-control-input' id='<%= song._id %>'  <%= song.checked ? "checked": "" %>>
-                           <label for='<%= song._id %>' class='song-item-info row custom-control-label'>
-                             <div class='col-md-5'><%= song.artist %></div>
-                             <div class='col-md-7'><%= song.title %></div>
-                           </label>
-                         </div>
+                        <div class="song-item-info row">
+                            <div class='col-md-5'><%= song.artist %></div>
+                            <div class='col-md-7'><%= song.title %></div>
+                          </div>
                          <% if(currentUser && data.author.equals(currentUser._id) || currentUser.isAdmin){ %>
                            <div class='remove-container'>
                              <button class='btn btn-danger btn-sm remove-song' data-songId="<%=song._id%>">Remove</button>
@@ -66,22 +67,13 @@
               <div class="user-submitted-songs"></div>
             </div>
             <div class="content-container--form-buttons">
-              <a href="/polls/<%=data._id%>/r" class="btn btn-info">View Results</a>
-              <button class="btn btn-success">
-                Submit Your Vote!
+              <button class="btn btn-success" id="submit-poll">
+                Submit
               </button>
             </div>
           </form>
-          <% if(currentUser && data.author.equals(currentUser._id) || currentUser.isAdmin){ %>
-              <form id="delete-form" action="/polls/<%= data._id %>?_method=DELETE" method="POST" class="content-container--delete">
-                  <button class="btn btn-danger">Delete Poll Permanently</button>
-              </form>
-          <% }%>
         </div>
         <div class="content-container--add-song">
-          <h3 class="form-header">
-            You are welcome to add songs to the poll.
-          </h3>
           <form class="form--viewpoll vote" id="add-song-form" autocomplete="off">
             <div class="form-row">
               <div class="form-group col-md-4">
@@ -90,17 +82,13 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="add-title">Song Title</label>
-                <div class="scrollable-dropdown-menu">
-                  <input type="text" class="form-control" id="add-title" name="add-title" placeholder="Title" required>
-                </div>
+                <input type="text" class="form-control" id="add-title" name="add-title" placeholder="Title" required>
               </div>
               <div class="form-group col-md-2 content-container--add-song-button">
                 <button type="button" id="add-song" class="btn btn-primary">Add</button>
               </div>
             </div>
           </form>
-        </div>
-      </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

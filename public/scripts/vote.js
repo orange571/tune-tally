@@ -223,17 +223,22 @@ $(function(){
     },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     remote: {
-      wildcard: '%QUERY',
-      url: 'http://localhost:3000/title?key=%QUERY',
+      prepare: function(query, settings) {
+        var artistSetting = ($("#add-artist").val() !== "" ? "%20artist:"+$("#add-artist").val() : "")
+        settings.url += 'track:' + query + artistSetting;
+        console.log("settings");
+        console.log(settings);
+        return settings;
+      },
+      url: 'http://localhost:3000/title?key=',
       transform: function(titles) {
         console.log(titles);
         // Map the remote source JSON array to a JavaScript object array
         return $.map(titles, function (title) {
-          console.log(title.name);
-          console.log("artist");
           console.log(title.artists);
             return {
-                value: title.name + " - " + title.artists[0].name
+                value: title.name,
+                artist: title.artists[0].name
             };
         });
       }
@@ -244,7 +249,15 @@ $(function(){
   $('#add-title').typeahead(null, {
     display: 'value',
     source: titles,
-    limit: Infinity
+    limit: Infinity,
+    templates: {
+        suggestion: function(item) { return "<p>" + item.artist + " - <b>" + item.value + "</b></p>"; },
+        footer: function(query) { return "<p class='typeahead-footer'><b>Searched for '" + query.query + "'</b>" + ($("#add-artist").val() ? " by " + $("#add-artist").val() : "") + "</p>" }
+    }
+  });
+
+  $('#add-title').bind('typeahead:select', function(ev, suggestion) {
+    $('#add-artist').val(suggestion.artist);
   });
 
   //VALIDATION
