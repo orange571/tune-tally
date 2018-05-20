@@ -6,6 +6,15 @@ $(function(){
     $('.ending-time').html("Poll ends <span class='bold'>" +  moment(data.deadline).fromNow() + "</span> from now on <span class='bold'>" + moment(data.deadline).format("MM/DD/YYYY hh:mmA") + "</span>");
   }
 
+  if(localStorage.getItem(data._id)){
+    $(".vote-link-btn").hide();
+  };
+
+  //DELETE Poll
+    $("#delete-form").on("submit", function(e){
+      return confirm('Delete the poll "' +  data.title + '"?"');
+    })
+
   $('.share-popover').popover({
     container: 'body',
     trigger: 'click',

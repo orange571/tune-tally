@@ -294,10 +294,10 @@ form {
   .song-item.row {
     flex-wrap: nowrap;
   }
-  /**
-  .song-item-info.row{
-    max-width: 80%
-  }**/
+
+  .form--initializepoll .song-item-info.row{
+    max-width: 87%
+  }
   .poll-list .custom-control.custom-checkbox {
     max-width: 87%
   }
@@ -587,4 +587,8 @@ label.error {
 
 .share-url-button {
   font-size: 0.8rem;
+}
+
+#delete-form {
+  margin-top: 0.7rem;
 }

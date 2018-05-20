@@ -40,7 +40,9 @@
                   <a href="/polls/<%=poll._id%>/r">
                     <div class="poll-summary">
                       <h3><%= poll.title %></h3>
-                      <p class="deadline" data-deadline="<%=poll.deadline%>">Ends <%=poll.deadline%></p>
+                      <p class="deadline"><%=moment(poll.deadline).isSameOrBefore() ? "Ended " : "Ends " %>
+                        <span data-deadline="<%=poll.deadline%>"><%=poll.deadline%></span>
+                      </p>
                     </div>
                   </a>
               <% }); %>
@@ -52,10 +54,12 @@
               <div class="empty-error">You haven't voted in any polls yet</div>
             <% } else { %>
               <%data.participantVotes.forEach(function(poll){ %>
-                  <a href="/polls/<%=poll._id%>">
+                  <a href="/polls/<%=poll._id%>/r">
                     <div class="poll-summary">
                       <h3><%= poll.title %></h3>
-                      <p class="deadline" data-deadline="<%=poll.deadline%>">Ends <%=poll.deadline%></p>
+                      <p class="deadline"><%=moment(poll.deadline).isSameOrBefore() ? "Ended " : "Ends " %>
+                        <span data-deadline="<%=poll.deadline%>"><%=poll.deadline%></span>
+                      </p>
                     </div>
                   </a>
               <% }); %>

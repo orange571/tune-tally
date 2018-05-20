@@ -100,6 +100,32 @@ $(function(){
       document.execCommand("copy");
     });
 
+    //REMOVE Song
+    $(".remove-song").on("click", function(e) {
+      e.preventDefault();
+      var songId = $(this).attr("data-songId");
+      console.log("songId", songId);
+      $(this).append("<div id='loader-overlay'><img src='/images/transparent-loader.gif' alt='loader'></div>");
+      $.ajax({
+        type: "DELETE",
+        timeout: 25000,
+        url: 'http://localhost:3000/polls/' + data._id + '/song/' + songId,
+        success: function(data) {
+          if (data.status === "Success") {
+              window.location.reload();
+          } else if (data.status === "Error") {
+            alert(JSON.Stringify(data.error));
+            window.location.reload();
+          }
+        },
+        error: function(jqXHR, textStatus, err) {
+            //show error message
+            alert('text status '+textStatus+', err '+err)
+        },
+        contentType: 'application/json',
+      });
+    })
+
     // Instantiate the Bloodhound suggestion engine
     var artists = new Bloodhound({
       datumTokenizer: function(datum) {
@@ -134,18 +160,22 @@ $(function(){
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        wildcard: '%QUERY',
-        url: 'http://localhost:3000/title?key=%QUERY',
+        prepare: function(query, settings) {
+          var artistSetting = ($("#add-artist").val() !== "" ? "%20artist:"+$("#add-artist").val() : "")
+          settings.url += 'track:' + query + artistSetting;
+          console.log("settings");
+          console.log(settings);
+          return settings;
+        },
+        url: 'http://localhost:3000/title?key=',
         transform: function(titles) {
           console.log(titles);
           // Map the remote source JSON array to a JavaScript object array
           return $.map(titles, function (title) {
-            console.log(title.name);
-            console.log("artist");
             console.log(title.artists);
               return {
-                value: title.name,
-                artist: title.artists[0].name
+                  value: title.name,
+                  artist: title.artists[0].name
               };
           });
         }

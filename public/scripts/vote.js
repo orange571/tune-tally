@@ -1,4 +1,8 @@
 $(function(){
+  if(localStorage.getItem(data._id)){
+    alert("You have voted in this poll before. You will be redirected to results page.")
+    window.location = 'http://localhost:3000/polls/' + data._id + '/r';
+  };
   moment().format();
   setupPoll(data);
   var newSongCounter = -1; //first song will have index of 0
@@ -131,9 +135,12 @@ $(function(){
         timeout:25000,
         url: 'http://localhost:3000/polls/' + data._id + '/vote',
         data: JSON.stringify(result),
-        success: function(data) {
-          if (data.status === "Success") {
-              window.location = data.redirect;
+        success: function(successResult) {
+          if (successResult.status === "Success") {
+            if(!data.enforceLogin){
+              localStorage.setItem(data._id, true);
+            }
+            window.location = successResult.redirect;
           }
         },
         error: function(jqXHR, textStatus, err) {
@@ -146,6 +153,10 @@ $(function(){
     return false;
   })
 
+//DELETE Poll
+  $("#delete-form").on("submit", function(e){
+    return confirm('Delete the poll "' +  data.title + '"?"');
+  })
 
   //REMOVE Song
   $(".remove-song").on("click", function(e) {
@@ -172,22 +183,6 @@ $(function(){
       contentType: 'application/json',
     });
   })
-//TYPEAHEAD
-/**  $('#add-artist').typeahead({
-    name : 'artist',
-    remote: {
-        url : 'http://localhost:3000/search?key=%QUERY',
-        filter: function (artists) {
-            // Map the remote source JSON array to a JavaScript object array
-            return $.map(artists, function (artist) {
-                return {
-                    value: artist.name
-                };
-            });
-        }
-    },
-    limit: 10
-  });**/
 
   // Instantiate the Bloodhound suggestion engine
   var artists = new Bloodhound({

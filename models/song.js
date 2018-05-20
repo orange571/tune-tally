@@ -14,7 +14,7 @@ var songSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
    },
-   fromSpotify: Boolean,
+   voteCounter: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model("Song", songSchema);

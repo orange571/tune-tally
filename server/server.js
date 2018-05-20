@@ -33,6 +33,9 @@ app.use(express.static(publicPath));
 app.use(methodOverride("_method"));
 app.use(flash());
 
+//require moment
+app.locals.moment = require('moment');
+
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret: "Emboldened pheonix takes world by storm!",
@@ -73,7 +76,7 @@ var authOptions = {
 
 app.get('/artist',function(req,res){
   console.log("recieved request");
-  console.log(req.query);
+  //console.log(req.query);
   request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       // use the access token to access the Spotify Web API
@@ -86,7 +89,7 @@ app.get('/artist',function(req,res){
         json: true
       };
       request.get(options, function(error, response, body) {
-        console.log(body.artists.items);
+        //console.log(body.artists.items);
         res.end(JSON.stringify(body.artists.items));
       });
     }
@@ -95,7 +98,7 @@ app.get('/artist',function(req,res){
 
 app.get('/title',function(req,res){
   console.log("recieved request");
-  console.log(req.query);
+  //console.log(req.query);
   request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       // use the access token to access the Spotify Web API
@@ -108,7 +111,7 @@ app.get('/title',function(req,res){
         json: true
       };
       request.get(options, function(error, response, body) {
-        console.log(body.tracks.items);
+        //console.log(body.tracks.items);
         res.end(JSON.stringify(body.tracks.items));
       });
     }

@@ -53,7 +53,9 @@
         <div class="content-container--poll-results-footer">
           <div class="total-vote-count"><%= data.total %> votes</div>
           <div class="content-container-buttons">
-            <a href="/polls/<%=data.pollId%>"><button class="btn btn-primary">Vote</button><a>
+            <% if(moment(data.deadline).isSameOrAfter(moment())){ %>
+              <a class="vote-link-btn" href="/polls/<%=data.pollId%>"><button class="btn btn-primary">Vote</button><a>
+            <% } %>
             <button class="btn btn-secondary share-popover" data-toggle="popover"><i class="fas fa-share"></i> Share</button>
             <div class="popper-content d-none">
               <div class="social-links">
@@ -62,13 +64,18 @@
              <div class="local-links">
                <label>URL
                  <div>
-                   <input class="poll-link" type="text" value="/polls/<%= data.pollId %>"/>
+                   <input class="poll-link" type="text" value="http://localhost:3000/polls/<%= data.pollId %>"/>
                    <button class="btn btn-dark copy-poll-link">Copy</button>
                  </div>
               </label>
 
              </div>
            </div>
+           <% if((currentUser && data.author.equals(currentUser._id)) || (currentUser && currentUser.isAdmin)){ %>
+               <form id="delete-form" action="/polls/<%= data.pollId %>?_method=DELETE" method="POST" class="content-container--delete">
+                   <button class="btn btn-danger">Delete Poll Permanently</button>
+               </form>
+           <% }%>
           </div>
         </div>
       </div>

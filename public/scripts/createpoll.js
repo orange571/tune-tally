@@ -1,23 +1,4 @@
 $(document).ready(function(){
-  // HIDE OR SHOW LOGIN OPTIONS
-  $('#enforce-login').click(function() {
-    $('#login-options').toggle(this.checked);
-  });
-  $('#all-login').click(function(){
-        $('.login-option').prop('checked', this.checked);
-  })
-  $('.login-option').click(function(){
-    if ($('#all-login').is(':checked')){
-      $('#all-login').prop('checked', false);
-    }
-  })
-
-  //HIDE/SHOW SPOTIFY ENFORCED
-    $('#open-add').click(function() {
-      $('.content-container--spotify-enforced').toggle(this.checked);
-    });
-
-
   //DEADLINE SETUP
   moment().format();
   setDeadineValue('day');
@@ -60,14 +41,8 @@ $(document).ready(function(){
       }
       result.maxVotes = parseInt($('input[name="max-votes"]').val());
       result.openAdd = $('#open-add')[0].checked;
-      result.spotifyEnforced = $('#open-add')[0].checked;
       result.enforceLogin = $('#enforce-login')[0].checked;
-      result.loginOptions = $("#login-options input:checkbox:checked").map(function(){
-                              return $(this).val();
-                            }).get();
       alert(JSON.stringify(result));
-      console.log(result);
-      console.log(JSON.stringify(result));
       $.ajax({
         type: "POST",
         timeout: 2000,

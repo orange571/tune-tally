@@ -10,9 +10,7 @@ var pollSchema = new mongoose.Schema({
    deadline: { type: Date },
    maxVotes: Number,
    openAdd: Boolean,
-   spotifyEnforced: Boolean,
    enforceLogin: Boolean,
-   loginOptions: [ String ],
    songs: [{
      type: mongoose.Schema.Types.ObjectId,
      ref: "Song"

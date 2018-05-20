@@ -25,7 +25,7 @@
     <div class="container">
       <div class="content-container--header">
         <h1 class="subheading poll-title">Vote for: <%= data.title %></h1>
-        <p class="ending-time">Poll ends on <span class='bold'> <%= data.deadline.toLocaleDateString() %> </span></p>
+        <p class="ending-time">Poll <%=moment(data.deadline).isSameOrBefore() ? "ended" : "ends" %> on <span class='bold'> <%= data.deadline.toLocaleDateString() %> </span></p>
       </div>
       <div class="content-container__hcenter">
         <div class="content-container--vote-form">
@@ -50,7 +50,7 @@
                              <div class='col-md-7'><%= song.title %></div>
                            </label>
                          </div>
-                         <% if(currentUser && data.author.equals(currentUser._id) || currentUser.isAdmin){ %>
+                         <% if(currentUser && data.author.equals(currentUser._id) ||  currentUser && currentUser.isAdmin){ %>
                            <div class='remove-container'>
                              <button class='btn btn-danger btn-sm remove-song' data-songId="<%=song._id%>">Remove</button>
                            </div>
@@ -72,34 +72,36 @@
               </button>
             </div>
           </form>
-          <% if(currentUser && data.author.equals(currentUser._id) || currentUser.isAdmin){ %>
+          <% if(currentUser && data.author.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
               <form id="delete-form" action="/polls/<%= data._id %>?_method=DELETE" method="POST" class="content-container--delete">
                   <button class="btn btn-danger">Delete Poll Permanently</button>
               </form>
           <% }%>
         </div>
-        <div class="content-container--add-song">
-          <h3 class="form-header">
-            You are welcome to add songs to the poll.
-          </h3>
-          <form class="form--viewpoll vote" id="add-song-form" autocomplete="off">
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="add-artist">Artist</label>
-                <input type="text" class="form-control" id="add-artist" name="add-artist" placeholder="Artist" autofocus required>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="add-title">Song Title</label>
-                <div class="scrollable-dropdown-menu">
-                  <input type="text" class="form-control" id="add-title" name="add-title" placeholder="Title" required>
+        <% if(currentUser && data.author.equals(currentUser._id) || data.openAdd ){ %>
+          <div class="content-container--add-song">
+            <h3 class="form-header">
+              <%= data.openAdd ? "You are welcome to add songs to the poll." : "Only you as owner have permission to add songs to this poll." %>
+            </h3>
+            <form class="form--viewpoll vote" id="add-song-form" autocomplete="off">
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="add-artist">Artist</label>
+                  <input type="text" class="form-control" id="add-artist" name="add-artist" placeholder="Artist" autofocus required>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="add-title">Song Title</label>
+                  <div class="scrollable-dropdown-menu">
+                    <input type="text" class="form-control" id="add-title" name="add-title" placeholder="Title" required>
+                  </div>
+                </div>
+                <div class="form-group col-md-2 content-container--add-song-button">
+                  <button type="button" id="add-song" class="btn btn-primary">Add</button>
                 </div>
               </div>
-              <div class="form-group col-md-2 content-container--add-song-button">
-                <button type="button" id="add-song" class="btn btn-primary">Add</button>
-              </div>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
+        <% }%>
       </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
