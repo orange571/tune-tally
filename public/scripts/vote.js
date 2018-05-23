@@ -1,7 +1,7 @@
 $(function(){
   if(localStorage.getItem(data._id)){
     alert("You have voted in this poll before. You will be redirected to results page.")
-    window.location = 'http://localhost:3000/polls/' + data._id + '/r';
+    window.location = '/polls/' + data._id + '/r';
   };
   moment().format();
   setupPoll(data);
@@ -133,7 +133,7 @@ $(function(){
       $.ajax({
         type: "POST",
         timeout:25000,
-        url: 'http://localhost:3000/polls/' + data._id + '/vote',
+        url: '/polls/' + data._id + '/vote',
         data: JSON.stringify(result),
         success: function(successResult) {
           if (successResult.status === "Success") {
@@ -162,12 +162,11 @@ $(function(){
   $(".remove-song").on("click", function(e) {
     e.preventDefault();
     var songId = $(this).attr("data-songId");
-    console.log("songId", songId);
     $(this).append("<div id='loader-overlay'><img src='/images/transparent-loader.gif' alt='loader'></div>");
     $.ajax({
       type: "DELETE",
       timeout: 25000,
-      url: 'http://localhost:3000/polls/' + data._id + '/song/' + songId,
+      url: '/polls/' + data._id + '/song/' + songId,
       success: function(data) {
         if (data.status === "Success") {
             window.location.reload();
@@ -192,12 +191,10 @@ $(function(){
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     remote: {
       wildcard: '%QUERY',
-      url: 'http://localhost:3000/artist?key=%QUERY',
+      url: '/artist?key=%QUERY',
       transform: function(artists) {
-        console.log(artists);
         // Map the remote source JSON array to a JavaScript object array
         return $.map(artists, function (artist) {
-          console.log(artist.name);
             return {
                 value: artist.name
             };
@@ -221,16 +218,12 @@ $(function(){
       prepare: function(query, settings) {
         var artistSetting = ($("#add-artist").val() !== "" ? "%20artist:"+$("#add-artist").val() : "")
         settings.url += 'track:' + query + artistSetting;
-        console.log("settings");
-        console.log(settings);
         return settings;
       },
-      url: 'http://localhost:3000/title?key=',
+      url: '/title?key=',
       transform: function(titles) {
-        console.log(titles);
         // Map the remote source JSON array to a JavaScript object array
         return $.map(titles, function (title) {
-          console.log(title.artists);
             return {
                 value: title.name,
                 artist: title.artists[0].name

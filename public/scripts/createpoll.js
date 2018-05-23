@@ -17,7 +17,6 @@ $(document).ready(function(){
   });
   function setDeadineValue (unit) {
     if($("input[name='deadline']").attr('type') === 'text') {
-      console.log(moment().add(1,unit).format('MM/DD/YYYY hh:mmA'));
       $("input[name='deadline']").val(moment().add(1,unit).format('MM/DD/YYYY hh:mmA'))
     }else if($("input[name='deadline']").attr('type') === 'datetime-local') {
       $("input[name='deadline']").val(moment().add(1,unit).format('YYYY-MM-DDTHH:mm'))
@@ -42,11 +41,10 @@ $(document).ready(function(){
       result.maxVotes = parseInt($('input[name="max-votes"]').val());
       result.openAdd = $('#open-add')[0].checked;
       result.enforceLogin = $('#enforce-login')[0].checked;
-      alert(JSON.stringify(result));
       $.ajax({
         type: "POST",
         timeout: 2000,
-        url: 'http://localhost:3000/polls/createpoll',
+        url: '/polls/createpoll',
         data: JSON.stringify(result),
         success: function(data) {
           if (data.status === "Success") {

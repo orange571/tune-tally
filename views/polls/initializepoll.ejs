@@ -28,7 +28,7 @@
         <p class="ending-time">Poll ends on <span class='bold'> <%= data.deadline.toLocaleDateString() %> </span></p>
         <p class="content-container__share-url">
           <label for="share-url">Share poll with this URL:</label>
-          <input type="text" id="share-url" value="http://localhost:3000/polls/<%= data._id %>" />
+          <input type="text" id="share-url" value="https://tunetally.herokuapp.com/polls/<%= data._id %>" />
           <button class="share-url-button" data-copytarget="#share-url">copy</button>
         </p>
       </div>

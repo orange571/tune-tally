@@ -59,12 +59,12 @@
             <button class="btn btn-secondary share-popover" data-toggle="popover"><i class="fas fa-share"></i> Share</button>
             <div class="popper-content d-none">
               <div class="social-links">
-                <a class="twitter-link" href="https://twitter.com/intent/tweet?text=<%= encodeURI(data.title) %>&url=http://www.tunetally.com/<%=data.pollId%>" target="_blank">Twitter</a>
+                <a class="twitter-link" href="https://twitter.com/intent/tweet?text=<%= encodeURI(data.title) %>&url=https://tunetally.herokuapp.com/polls/<%=data.pollId%>" target="_blank">Twitter</a>
               </div>
              <div class="local-links">
                <label>URL
                  <div>
-                   <input class="poll-link" type="text" value="http://localhost:3000/polls/<%= data.pollId %>"/>
+                   <input class="poll-link" type="text" value="https://tunetally.herokuapp.com/polls/<%= data.pollId %>"/>
                    <button class="btn btn-dark copy-poll-link">Copy</button>
                  </div>
               </label>
