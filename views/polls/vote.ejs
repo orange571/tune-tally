@@ -17,6 +17,12 @@
     <script type='text/javascript'>
       var data =<%-JSON.stringify(data)%>;
       console.log(data);
+      console.log(<%- !(currentUser && data.author.equals(currentUser._id)) %>);
+      console.log(localStorage.getItem(data._id));
+      if(<%- !(currentUser && data.author.equals(currentUser._id)) %> && localStorage.getItem(data._id)){
+        alert("You have voted in this poll before. You will be redirected to results page.")
+        window.location = '/polls/' + data._id + '/r';
+      };
     </script>
   </head>
   <body>

@@ -1,8 +1,4 @@
 $(function(){
-  if(localStorage.getItem(data._id)){
-    alert("You have voted in this poll before. You will be redirected to results page.")
-    window.location = '/polls/' + data._id + '/r';
-  };
   moment().format();
   setupPoll(data);
   var newSongCounter = -1; //first song will have index of 0

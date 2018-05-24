@@ -31,9 +31,9 @@ $(document).ready(function(){
       result.title = $('#title').val();
       if($('#ends').val() === "custom-deadline"){
         if($("input[name='deadline']").attr('type') === 'text') {
-          result.deadline = moment($("input[name='deadline']").val()).format('MM/DD/YYYY hh:mmA').toISOString();
+          result.deadline = moment($("input[name='deadline']").val(), 'MM/DD/YYYY hh:mmA').toISOString();
         }else if($("input[name='deadline']").attr('type') === 'datetime-local') {
-          result.deadline = moment($("input[name='deadline']").val()).format('YYYY-MM-DDTHH:mm').toISOString();
+          result.deadline = moment($("input[name='deadline']").val(), 'YYYY-MM-DDTHH:mm').toISOString();
         }
       } else {
         result.deadline = moment().add(1,$('#ends').val()).toISOString();
@@ -43,7 +43,7 @@ $(document).ready(function(){
       result.enforceLogin = $('#enforce-login')[0].checked;
       $.ajax({
         type: "POST",
-        timeout: 2000,
+        timeout: 2500,
         url: '/polls/createpoll',
         data: JSON.stringify(result),
         success: function(data) {
