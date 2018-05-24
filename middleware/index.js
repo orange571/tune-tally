@@ -28,10 +28,10 @@ middlewareObj.checkPollOwnership = function(req, res, next) {
 
 middlewareObj.isBeforeDeadline = function(req, res, next) {
   Poll.findById(req.params.id, function(err, foundPoll){
-     if(err){
+     if(err || !foundPoll){
          req.flash("error", "Poll not found");
          res.redirect("back");
-     }  else {
+     } else {
          //has poll expired
       if(moment(foundPoll.deadline).isSameOrAfter(moment())) {
           next();
@@ -59,11 +59,11 @@ middlewareObj.isLoggedIn = function(req, res, next){
 
 middlewareObj.enforceLogin = function(req, res, next) {
   Poll.findById(req.params.id, function(err, foundPoll){
-     if(err){
+     if(err || !foundPoll){
          req.flash("error", "Poll not found");
          res.redirect("back");
      }  else {
-        if(foundPoll.enforceLogin) {
+        if(foundPoll && foundPoll.enforceLogin) {
           if(req.isAuthenticated()){
               return next();
           }

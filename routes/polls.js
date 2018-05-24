@@ -457,8 +457,9 @@ router.get("/:id/r", function(req,res){
     .findById(req.params.id)
     .populate({path:"songs"})
     .exec(function(err,foundPoll){
-      if(err) {
-        console.log(err)
+      if(err || !foundPoll){
+          req.flash("error", "Poll not found");
+          res.redirect("back");
       } else {
         var title = foundPoll.title;
         var pollId = foundPoll._id;
@@ -699,21 +700,3 @@ router.delete("/:id",middleware.checkPollOwnership, function(req, res){
 });
 
 module.exports = router;
-
-/**
-Vote.findOne({poll: req.params.id, user: req.params.}, function(err, foundVote){
-  foundVote.createdAt = Date.now();
-  console.log(foundVote.createdAt);
-  foundVote.save();
-  var songCounter = 0;
-  foundVote.songs.forEach(function(songId){
-    Song.findById(songId, function(err, foundSong){
-      foundSong.votes.remove(foundVote._id);
-      foundSong.save();
-      songCounter++;
-      if( songCounter === foundVote.songs.length) {
-        resolve(foundPoll);
-      }
-    })
-  });
-});**/
