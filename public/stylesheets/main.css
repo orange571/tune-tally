@@ -53,6 +53,13 @@ body {
 .content-container--form-buttons {
   padding-top: 0.3rem;
   text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap-reverse;
+}
+
+.content-container--form-buttons .view-results {
+  margin-right: 0.3rem;
 }
 
 @media only screen and (min-width: 768px) {
@@ -318,11 +325,12 @@ form {
   }
 
   .form--submitvote .btn-success {
-    width: 100%
+    width: 100%;
+    margin-bottom: 0.7rem;
   }
 
-  .content-container--form-buttons .btn-info {
-    margin-bottom: 0.7rem;
+  .content-container--form-buttons .view-results {
+    margin-right: 0;
   }
 
   .content-container__share-url label {
