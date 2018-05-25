@@ -21,7 +21,7 @@ $(function(){
     $('.user-submitted-songs').addClass('end-list');
     $('.registered-songs').removeClass('end-list');
     msg += "<div class='song-item row'>";
-    msg += "<div class='song-item-info row'><div class='col-md-5'>" + song.artist + "</div><div class='col-md-7'>" + song.title + "</div></div>";
+    msg += "<div class='song-item-info row'><div class='col-md-4'>" + song.artist + "</div><div class='col-md-7'>" + song.title + "</div></div>";
     msg += "<div class='remove-container'><button class='btn btn-danger btn-sm remove-song'>Remove</button></div></div>";
     $('.user-submitted-songs').append(msg);
   }

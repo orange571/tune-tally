@@ -27,7 +27,7 @@ router.post("/register", function(req, res){
             return res.redirect("/register");
         }
         passport.authenticate("local")(req, res, function(){
-           req.flash("success", "Welcome to Tune Tally " + user.username);
+           //req.flash("success", "Welcome to Tune Tally " + user.username);
            res.redirect("/");
         });
     });
@@ -44,7 +44,7 @@ router.post("/login", passport.authenticate("local",
         //successRedirect: req.session.returnTo || '/',
         failureRedirect: "/login",
         failureFlash:true,
-        successFlash: "Welcome to Tune Tally"
+        //successFlash: "Welcome to Tune Tally"
     }), function(req, res){
       res.redirect(req.session.returnTo || '/');
       console.log(req.session.returnTo);

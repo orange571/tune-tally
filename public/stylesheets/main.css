@@ -45,6 +45,7 @@ body {
 }
 
 .content-container--header {
+  margin-top: 1.0rem;
   padding: 2.0rem;
   text-align: center;
 }
@@ -60,6 +61,7 @@ body {
     top: 32px;
   }
 }
+
 .sub-input {
   padding-left: 1.0rem;
 }
@@ -68,9 +70,8 @@ header {
   height: 4.0rem;
   width: 100%;
   background-color: rgb(0, 13, 63);
-  margin-bottom: 1.0rem;
 }
-header nav {
+nav {
   width: 100%;
   height: auto;
   position: fixed;
@@ -155,6 +156,7 @@ form {
   width: 60%;
   min-width: 300px;
   max-width: 400px;
+  overflow-x: auto;
 }
 
 .form--createpoll #login-options,
@@ -276,6 +278,7 @@ form {
 
 .poll-list .row .custom-control.custom-checkbox {
   flex:1 0 auto;
+  width: 100%;
 }
 
 .poll-list .custom-control-label::after, .poll-list .custom-control-label::before {
@@ -317,6 +320,34 @@ form {
   .form--submitvote .btn-success {
     width: 100%
   }
+
+  .content-container--form-buttons .btn-info {
+    margin-bottom: 0.7rem;
+  }
+
+  .content-container__share-url label {
+    display: block;
+  }
+
+  .login-options .signed-in-as {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 503px) {
+  header .logo {
+    font-size: 1.0rem;
+    padding: 0.3rem;
+  }
+
+  nav .login-options .nav-unit {
+    padding: 0.2rem 0.2rem;
+    font-size: 0.8rem;
+  }
+
+  header {
+    height: 2.5rem;
+  }
 }
 
 .end-list .song-item:last-child, .end-list .song-item-result:last-child {
@@ -342,6 +373,7 @@ form {
 .song-item .remove-container {
   padding:0 0.5rem;
   justify-content: flex-end;
+  width: 100%;
 }
 
 .remove-container {
@@ -466,16 +498,17 @@ label.error {
 
 .song-item-data {
   margin-bottom: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .song-details {
   flex: 1 0 auto;
+  max-width: 100%;
 }
 
 .vote-count {
-  flex: 0 0 6.0rem;
+  flex: 1 0 6.0rem;
   text-align: right;
-
 }
 
 .content-container-percentage-bar {
@@ -498,6 +531,7 @@ label.error {
   width: 100%;
   max-width: 700px;
   display: flex;
+  flex-wrap: wrap;
   padding: 1.0rem 1.5rem;
   justify-content:space-between;
   align-items: center;
@@ -510,7 +544,9 @@ label.error {
 .content-container-buttons {
   text-align: right;
 }
-
+.content-container--poll-results-footer .content-container-buttons {
+  flex: 1 1 auto;
+}
 .content-container-buttons .btn {
   margin: 0.1rem 0.3rem;
 }
@@ -556,8 +592,10 @@ label.error {
   flex-wrap: wrap;
 }
 
-.login-options div{
+.login-options .nav-unit{
   padding: 0.4rem 0.5rem;
+  display: flex;
+  align-items: center;
 }
 
 #loader-overlay {
@@ -580,15 +618,58 @@ label.error {
 }
 
 .content-container__share-url input{
-  width: 15rem;
+  max-width: 15rem;
   font-size: 0.8rem;
   padding: 1px 3px;
+  width: 100%;
 }
 
 .share-url-button {
   font-size: 0.8rem;
+  background-color: #eee;
+  border-radius: 3px;
 }
 
+@media only screen and (max-width: 375px) {
+  .share-url-button {
+    margin-top: 0.3rem;
+    width: 100%;
+    max-width: 15rem;
+  }
+
+  nav .btn {
+    padding: 0.1rem 0.1rem;
+  }
+
+  header {
+    height: 2.0rem;
+  }
+
+  .form--createpoll, .form--register, .form--login {
+    text-align: left;
+    width: 100%;
+    min-width: 0px;
+    overflow-x: auto;
+  }
+}
 #delete-form {
   margin-top: 0.7rem;
+}
+
+.container .alert {
+  z-index: 20;
+}
+
+.register-link-msg {
+  max-width: 200px;
+  text-align: left;
+}
+
+nav .username {
+  max-width: 100px;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block
 }

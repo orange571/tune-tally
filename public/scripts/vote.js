@@ -34,7 +34,7 @@ $(function(){
     msg += "<div class='custom-control custom-checkbox'>";
     msg += "<input type='checkbox' class='custom-control-input' id='"+id+"'>";
     msg += "<label for='"+id+"' class='song-item-info row custom-control-label'>";
-    msg += "<div class='col-md-5'>"+song.artist+"</div><div class='col-md-7'>"+song.title+"</div></label></div>";
+    msg += "<div class='col-md-4'>"+song.artist+"</div><div class='col-md-7'>"+song.title+"</div></label></div>";
     msg += "<div class='remove-container'><button class='btn btn-danger btn-sm remove-song'>Remove</button></div></div>"
     $('.user-submitted-songs').append(msg);
   }

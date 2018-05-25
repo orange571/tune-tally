@@ -54,7 +54,7 @@
                          <div class="custom-control custom-checkbox">
                            <input type='checkbox' class='custom-control-input' id='<%= song._id %>'  <%= song.checked ? "checked": "" %>>
                            <label for='<%= song._id %>' class='song-item-info row custom-control-label'>
-                             <div class='col-md-5'><%= song.artist %></div>
+                             <div class='col-md-4'><%= song.artist %></div>
                              <div class='col-md-7'><%= song.title %></div>
                            </label>
                          </div>
@@ -95,7 +95,7 @@
               <div class="form-row">
                 <div class="form-group col-md-4">
                   <label for="add-artist">Artist</label>
-                  <input type="text" class="form-control" id="add-artist" name="add-artist" placeholder="Artist" autofocus required>
+                  <input type="text" class="form-control" id="add-artist" name="add-artist" placeholder="Artist" required>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="add-title">Song Title</label>

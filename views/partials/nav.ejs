@@ -14,11 +14,11 @@
           Login
         </a>
       <% } else { %>
-        <div class="">Signed In As <%= currentUser.username %></div>
-        <div class="">
+        <div class="nav-unit"><div class="signed-in-as">Signed In As&nbsp;</div><div class="username"><%= currentUser.username%></div></div>
+        <div class="btn-dashboard nav-unit">
              <a class="btn btn-sm btn-success" href="/dashboard">Go To Portal</a>
          </div>
-        <div class="">
+        <div class="btn-logout nav-unit">
           <a class="btn btn-link" href="/logout">Log Out</a>
         </div>
       <% } %>
