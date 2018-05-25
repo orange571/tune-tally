@@ -16,9 +16,9 @@ $(document).ready(function(){
     }
   });
   function setDeadineValue (unit) {
-    if($("input[name='deadline']").attr('type') === 'text') {
+    if(!Modernizr.inputtypes['datetime-local']) {
       $("input[name='deadline']").val(moment().add(1,unit).format('MM/DD/YYYY hh:mmA'))
-    }else if($("input[name='deadline']").attr('type') === 'datetime-local') {
+    }else {
       $("input[name='deadline']").val(moment().add(1,unit).format('YYYY-MM-DDTHH:mm'))
     }
   }
@@ -30,9 +30,9 @@ $(document).ready(function(){
       var result = {};
       result.title = $('#title').val();
       if($('#ends').val() === "custom-deadline"){
-        if($("input[name='deadline']").attr('type') === 'text') {
+        if(!Modernizr.inputtypes['datetime-local']) {
           result.deadline = moment($("input[name='deadline']").val(), 'MM/DD/YYYY hh:mmA').toISOString();
-        }else if($("input[name='deadline']").attr('type') === 'datetime-local') {
+        }else {
           result.deadline = moment($("input[name='deadline']").val(), 'YYYY-MM-DDTHH:mm').toISOString();
         }
       } else {
@@ -75,7 +75,8 @@ $(document).ready(function(){
   $("#create-poll").validate({
     rules: {
       'title': {
-        maxlength: 250
+        maxlength: 250,
+        required: true
       },
       'max-votes': {
         required: true,
