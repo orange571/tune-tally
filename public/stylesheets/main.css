@@ -646,7 +646,7 @@ label.error {
   }
 
   header {
-    height: 2.0rem;
+    height: 2.2rem;
   }
 
   .form--createpoll, .form--register, .form--login {
@@ -677,4 +677,13 @@ nav .username {
   overflow: hidden;
   white-space: nowrap;
   display: block
+  flex: 1 1 auto;
+}
+
+.welcome-message {
+  word-break: break-all;
+}
+
+.signed-in-as {
+  flex: 1 0 auto;
 }
