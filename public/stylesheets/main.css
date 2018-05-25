@@ -641,6 +641,10 @@ label.error {
     padding: 0.1rem 0.1rem;
   }
 
+  .btn-register {
+    margin-right: 0.5rem;
+  }
+
   header {
     height: 2.0rem;
   }
@@ -663,6 +667,7 @@ label.error {
 .register-link-msg {
   max-width: 200px;
   text-align: left;
+  margin-top: 1.0rem;
 }
 
 nav .username {
