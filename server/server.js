@@ -82,7 +82,7 @@ app.get('/artist',function(req,res){
       // use the access token to access the Spotify Web API
       var token = body.access_token;
       var options = {
-        url: 'https://api.spotify.com/v1/search?q=artist:' + req.query.key + '&type=artist&limit=10',
+        url: 'https://api.spotify.com/v1/search?q=artist:' + encodeURIComponent(req.query.key) + '&type=artist&limit=10',
         headers: {
           'Authorization': 'Bearer ' + token
         },
@@ -90,7 +90,11 @@ app.get('/artist',function(req,res){
       };
       request.get(options, function(error, response, body) {
         //console.log(body.artists.items);
-        res.end(JSON.stringify(body.artists.items));
+        if(error){
+          console.log(error);
+        } else if(body && body.artists){
+          res.end(JSON.stringify(body.artists.items));
+        }
       });
     }
   });
@@ -104,15 +108,23 @@ app.get('/title',function(req,res){
       // use the access token to access the Spotify Web API
       var token = body.access_token;
       var options = {
-        url: 'https://api.spotify.com/v1/search?q=' + req.query.key + '&type=track&limit=10',
+        url: 'https://api.spotify.com/v1/search?q=track:' + encodeURIComponent(req.query.track) + '&type=track&limit=10',
         headers: {
           'Authorization': 'Bearer ' + token
         },
         json: true
       };
+      if( req.query.hasOwnProperty("artist")){
+        options.url = 'https://api.spotify.com/v1/search?q=track:' + encodeURIComponent(req.query.track) + "%20artist:" + encodeURIComponent(req.query.artist) + '&type=track&limit=10'
+      }
+      console.log(options.url);
       request.get(options, function(error, response, body) {
         //console.log(body.tracks.items);
-        res.end(JSON.stringify(body.tracks.items));
+        if(error){
+          console.log(error);
+        } else if(body && body.tracks){
+          res.end(JSON.stringify(body.tracks.items));
+        }
       });
     }
   });

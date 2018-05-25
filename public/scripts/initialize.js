@@ -157,11 +157,11 @@ $(function(){
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
         prepare: function(query, settings) {
-          var artistSetting = ($("#add-artist").val() !== "" ? "%20artist:"+$("#add-artist").val() : "")
-          settings.url += 'track:' + query + artistSetting;
+          var artistSetting = ($("#add-artist").val() !== "" ? "&artist="+encodeURIComponent($("#add-artist").val()) : "")
+          settings.url += 'track=' + query + artistSetting;
           return settings;
         },
-        url: '/title?key=',
+        url: '/title?',
         transform: function(titles) {
           // Map the remote source JSON array to a JavaScript object array
           return $.map(titles, function (title) {
