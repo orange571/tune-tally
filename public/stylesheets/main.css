@@ -464,6 +464,7 @@ label.error {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
 }
 
 .content-container--header a .button--home-header.primary {
