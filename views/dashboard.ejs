@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Tune Tally</title>
-    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
-    <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="/../stylesheets/main.css" rel="stylesheet" type="text/css" />
-    <link href="/../stylesheets/typeahead-styles.css" rel="stylesheet" type="text/css"/>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<% include ./partials/htmlhead %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
-    <!--<script src="/scripts/typeahead.bundle.js"></script>-->
-    <script src="http://cdn.jsdelivr.net/typeahead.js/0.9.3/typeahead.min.js"></script>
     <script src="/scripts/dashboard.js"></script>
     <script type='text/javascript'>
       var data =<%-JSON.stringify(data)%>;
@@ -26,23 +11,23 @@
     <% include ./partials/nav %>
     <% include ./partials/error_alert %>
     <div class="container">
-      <div class="content-container--header">
-        <h2 class="subheading poll-title">Dashboard</h2>
-        <div class="welcome-message">Welcome <%=data.username %>!</div>
-        <a href="/polls/createpoll"><button class="button--home-header primary">Create Poll</button></a>
+      <div class="page-header">
+        <h2 class="page-header__headline poll-title">Dashboard</h2>
+        <div class="page-header__welcome-message">Welcome <%=data.username %>!</div>
+        <a href="/polls/createpoll"><button class="button--home-header button--home-header--primary">Create Poll</button></a>
       </div>
       <div class="content-container__hcenter">
         <div class="dashboard-container">
-          <div class="authored-polls">
-            <h3 class="section-heading">Created Polls</h3>
+          <div class="dashboard__section authored-polls">
+            <h3 class="dashboard__section__heading">Created Polls</h3>
             <% if(data.authoredPolls.length === 0 ){ %>
               <div class="empty-error">You haven't created any polls yet</div>
             <% } else { %>
               <%data.authoredPolls.forEach(function(poll){ %>
                   <a href="/polls/<%=poll._id%>/r">
                     <div class="poll-summary">
-                      <h3><%= poll.title %></h3>
-                      <p class="deadline"><%=moment(poll.deadline).isSameOrBefore() ? "Ended " : "Ends " %>
+                      <h3 class="poll-summary__title"><%= poll.title %></h3>
+                      <p class="poll-summary__deadline"><%=moment(poll.deadline).isSameOrBefore() ? "Ended " : "Ends " %>
                         <span data-deadline="<%=poll.deadline%>"><%=poll.deadline%></span>
                       </p>
                     </div>
@@ -50,16 +35,16 @@
               <% }); %>
             <% } %>
           </div>
-          <div class="participant-polls">
-            <h3 class="section-heading">Polls You Voted For</h3>
+          <div class="dashboard__section participant-polls">
+            <h3 class="dashboard__section__heading">Polls You Voted For</h3>
             <% if(data.participantVotes.length === 0 ){ %>
               <div class="empty-error">You haven't voted in any polls yet</div>
             <% } else { %>
               <%data.participantVotes.forEach(function(poll){ %>
                   <a href="/polls/<%=poll._id%>/r">
                     <div class="poll-summary">
-                      <h3><%= poll.title %></h3>
-                      <p class="deadline"><%=moment(poll.deadline).isSameOrBefore() ? "Ended " : "Ends " %>
+                      <h3 class="poll-summary__title"><%= poll.title %></h3>
+                      <p class="poll-summary__deadline"><%=moment(poll.deadline).isSameOrBefore() ? "Ended " : "Ends " %>
                         <span data-deadline="<%=poll.deadline%>"><%=poll.deadline%></span>
                       </p>
                     </div>

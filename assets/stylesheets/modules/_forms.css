@@ -1,0 +1,67 @@
+.form--small{
+  text-align: left;
+  width: 60%;
+  min-width: 300px;
+  max-width: 400px;
+  overflow-x: auto;
+
+  @mixin atExtraSmall {
+    width: 100%;
+    min-width: 0px;
+    overflow-x: auto;
+  }
+}
+
+.form--medium{
+  width: 100%;
+  max-width: 700px;
+}
+
+
+.form--createpoll__deadline{
+  display: none;
+}
+
+
+.form--submitvote {
+  margin-bottom: 0.5rem;
+}
+
+.votes-remaining {
+  font-size: 1.2rem;
+  margin-bottom: 2.0rem;
+  font-style: italic;
+  background-color: rgba(90, 61, 164, 1);
+  padding: 0.5rem;
+  border-radius: 5px;
+  max-width: 500px
+}
+
+.votes-remaining.error {
+  color: rgb(255, 104, 104);
+}
+
+.form--delete-poll {
+  width: 100%;
+  text-align: right;
+  margin-top: 0.7rem;
+}
+
+.content-container--vote-form {
+  max-width: 700px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+label.error {
+  color: rgb(255, 104, 104);
+}
+
+.content-container__share-url label {
+  @mixin atSongSmall {
+      display: block;
+  }
+}

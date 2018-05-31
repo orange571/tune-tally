@@ -1,0 +1,23 @@
+@define-mixin atSongLarge {
+  @media only screen and (min-width: 768px) {
+    @mixin-content;
+  }
+}
+
+@define-mixin atSongSmall {
+  @media only screen and (max-width: 767px) {
+    @mixin-content;
+  }
+}
+
+@define-mixin atNavSmall {
+  @media only screen and (max-width: 503px) {
+    @mixin-content;
+  }
+}
+
+@define-mixin atExtraSmall {
+  @media only screen and (max-width: 375px) {
+    @mixin-content;
+  }
+}

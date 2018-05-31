@@ -1,20 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Tune Tally</title>
-    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16" />
-    <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="/../stylesheets/main.css" rel="stylesheet" type="text/css" />
-    <link href="/../stylesheets/typeahead-styles.css" rel="stylesheet" type="text/css"/>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<% include ../partials/htmlhead %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
-    <script src="/scripts/typeahead.bundle.js"></script>
     <script src="/scripts/pollresults.js"></script>
     <script type='text/javascript'>
       var isOwner = <%- !!(currentUser && data.author.equals(currentUser._id)) %>;
@@ -26,36 +11,36 @@
     <% include ../partials/nav %>
     <% include ../partials/error_alert %>
     <div class="container">
-      <div class="content-container--header">
-        <h2 class="subheading poll-title">Results for <%= data.title %></h2>
-        <p class="ending-time"></p>
+      <div class="page-header">
+        <h2 class="page-header__headline poll-title">Results for <%= data.title %></h2>
+        <p class="page-header__ending-time"></p>
       </div>
       <div class="content-container__hcenter">
-        <div class="content-container--poll-results">
+        <div class="poll-results">
             <div class="registered-songs end-list">
               <% if(data.songs.length === 0){ %>
-                <div class="empty-error">No songs in this poll for now</div>
+                <div class="list__empty-error">No songs in this poll for now</div>
               <% } else { %>
                 <%data.songs.forEach(function(song){ %>
-                  <div class="song-item-result">
-                    <div class="song-item-data">
-                      <div class="song-details"><%= song.title %> - <%= song.artist %></div>
-                      <div class="vote-count"><%= song.voteCount %> votes</div>
+                  <div class="song-item--result">
+                    <div class="song-item--result__data">
+                      <div class="song-item--result__data__details"><%= song.title %> - <%= song.artist %></div>
+                      <div class="song-item--result__data__vote-count"><%= song.voteCount %> votes</div>
                     </div>
-                    <div class="song-item-bar">
-                      <div class="content-container-percentage-bar">
-                        <div class="percentage-bar" style="width:<%= song.voteCount == 0 ? 0 : Math.round((song.voteCount * 100)/ data.total)%>%"></div>
+                    <div class="song-item--result__bar">
+                      <div class="song-item--result__bar__wrapper">
+                        <div class="song-item--result__bar__percentage-bar" style="width:<%= song.voteCount == 0 ? 0 : Math.round((song.voteCount * 100)/ data.total)%>%"></div>
                       </div>
-                      <div class="percentage"><%= song.voteCount == 0 ? 0 : Math.round((song.voteCount * 100)/ data.total) %>%</div>
+                      <div class="song-item--result__bar__percentage percentage"><%= song.voteCount == 0 ? 0 : Math.round((song.voteCount * 100)/ data.total) %>%</div>
                     </div>
                   </div>
                 <% }); %>
               <% } %>
             </div>
         </div>
-        <div class="content-container--poll-results-footer">
-          <div class="total-vote-count"><%= data.total %> votes</div>
-          <div class="content-container-buttons">
+        <div class="results-page__footer">
+          <div class="results-page__footer__total-vote-count"><%= data.total %> votes</div>
+          <div class="results-footer-buttons">
             <% if(moment(data.deadline).isSameOrAfter(moment())){ %>
               <a class="vote-link-btn" href="/polls/<%=data.pollId%>"><button class="btn btn-primary">Vote</button><a>
             <% } %>
@@ -75,7 +60,7 @@
              </div>
            </div>
            <% if((currentUser && data.author.equals(currentUser._id)) || (currentUser && currentUser.isAdmin)){ %>
-               <form id="delete-form" action="/polls/<%= data.pollId %>?_method=DELETE" method="POST" class="content-container--delete">
+               <form id="delete-form" action="/polls/<%= data.pollId %>?_method=DELETE" method="POST" class="form--delete-poll">
                    <button class="btn btn-danger">Delete Poll Permanently</button>
                </form>
            <% }%>

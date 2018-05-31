@@ -1,0 +1,13 @@
+.home-header {
+  padding: 2rem;
+}
+
+.home-header__heading {
+  font-family: 'Lobster', cursive;
+  font-size: 5.0rem;
+  padding-bottom: 1.0rem;
+}
+
+.content-container--header a .button--home-header.primary {
+  margin-top: 1.0rem;
+}

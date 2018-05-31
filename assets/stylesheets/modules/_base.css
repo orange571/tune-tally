@@ -1,0 +1,23 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to bottom right, rgb(64, 37, 132), rgb(87, 61, 137)) fixed;
+  color: rgb(251, 249, 255);
+}
+
+.logo {
+  font-family: 'Lobster', cursive;
+  font-size: 3.0rem;
+  padding-bottom: 1.0rem;
+}
+
+.bold {
+  font-weight: bold;
+}

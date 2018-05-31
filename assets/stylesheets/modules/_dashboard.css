@@ -1,0 +1,49 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+
+.dashboard__section{
+  border: 1px solid #fff;
+  border-radius: 5px;
+  flex: 1 1 auto;
+  margin: 1.0rem 2.0rem;
+  padding: 2.0rem;
+  max-width: 450px;
+  max-height: 700px;
+  overflow-y: auto;
+  background-color: rgb(64, 37, 132);
+
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+.dashboard__section__heading{
+  font-size: 2.5rem;
+  text-align: center;
+  padding-bottom: 1.0rem;
+}
+
+.poll-summary {
+  max-width: 500px;
+  padding: 1.0rem;
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 3px 3px 5px 3px rgba(35,15,87, 0.5);
+  background-color: rgb(108, 77, 193);
+  border-radius: 10px;
+  margin-bottom: 1.0rem;
+
+  &__title{
+    word-break: break-all;
+  }
+
+  &__deadline {
+    margin-bottom: 0;
+  }
+}

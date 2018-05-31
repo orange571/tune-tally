@@ -1,0 +1,47 @@
+a.logo-link {
+  color: #fff;
+}
+
+a.logo-link:hover {
+  text-decoration:none;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid #000;
+}
+
+.social-links a{
+  margin: 0.3rem 0.5rem;
+}
+
+.local-links {
+  padding: 0.5rem 0.5rem;
+}
+
+.local-links label{
+  margin-bottom: 0.1rem;
+  display: block;
+}
+
+.local-links input{
+  padding: .375rem .75rem;
+  max-width: 150px;
+}
+
+.local-links div {
+  display: flex;
+  align-items: center;
+}
+
+.local-links button {
+  margin-left: 0.2rem;
+}
+
+.register-link-msg {
+  max-width: 200px;
+  text-align: left;
+  margin-top: 1.0rem;
+}

@@ -1,0 +1,40 @@
+.poll-list {
+  padding-bottom: 1.0rem;
+  &__empty-error {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/**Override boostrap top: 0.25rem**/
+.poll-list .custom-control-label::after, .poll-list .custom-control-label::before {
+  top: 0.5rem;
+}
+
+.poll-header {
+  font-size:  1.2rem;
+  padding-bottom: 0.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  &__artist {
+    @mixin atSongLarge {
+        padding-left: 4.5rem;
+    }
+    @mixin atSongSmall {
+      padding-left: 4.5rem;
+    }
+  }
+
+  &__title {
+    @mixin atSongSmall {
+      padding-left: 4.5rem;
+    }
+  }
+}
+
+.poll-header, .poll-list {
+  width: 100%;
+  max-width: 700px;
+  border-bottom: 1px solid white;
+  margin-bottom: 1.0rem;
+}

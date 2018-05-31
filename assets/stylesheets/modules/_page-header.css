@@ -1,0 +1,12 @@
+.page-header {
+  margin-top: 1.0rem;
+  padding: 2.0rem;
+  text-align: center;
+
+  &__ending-time {
+    color: rgb(208, 191, 255);
+  }
+  &__welcome-message {
+    word-break: break-all;
+  }
+}

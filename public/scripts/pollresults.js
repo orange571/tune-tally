@@ -1,9 +1,9 @@
 $(function(){
   moment().format();
   if(moment(data.deadline).isSameOrBefore(moment())) {
-    $('.ending-time').html("Poll ended <span class='bold'>" +  moment(data.deadline).fromNow() + "</span> on <span class='bold'>" + moment(data.deadline).format("MM/DD/YYYY hh:mmA") + "</span>");
+    $('.page-header__ending-time').html("Poll ended <span class='bold'>" +  moment(data.deadline).fromNow() + "</span> on <span class='bold'>" + moment(data.deadline).format("MM/DD/YYYY hh:mmA") + "</span>");
   } else {
-    $('.ending-time').html("Poll ends <span class='bold'>" +  moment(data.deadline).fromNow() + "</span> from now on <span class='bold'>" + moment(data.deadline).format("MM/DD/YYYY hh:mmA") + "</span>");
+    $('.page-header__ending-time').html("Poll ends <span class='bold'>" +  moment(data.deadline).fromNow() + "</span> from now on <span class='bold'>" + moment(data.deadline).format("MM/DD/YYYY hh:mmA") + "</span>");
   }
 
   if(!isOwner && localStorage.getItem(data.pollId)){

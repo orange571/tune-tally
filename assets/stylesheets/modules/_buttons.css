@@ -1,0 +1,86 @@
+.button--home-header {
+  width: 90%;
+  max-width: 300px;
+  padding: 5px;
+  border-radius: 5px;
+  outline: none;
+  margin: 0.5rem 0;
+  border: 2px solid #fff;
+  cursor: pointer;
+  font-size: 1.2rem;
+
+  &--primary {
+    background-color: #fff;
+    color: rgb(64, 37, 132);
+    transition: background .2s ease;
+    &:hover {
+      background-color: rgb(231, 229, 255);
+      border: 2px solid rgb(231, 229, 255);
+    }
+  }
+
+  &--secondary {
+    background-color: rgb(64, 37, 132);
+    color: #fff;
+    &:hover {
+      color: rgb(231, 229, 255);
+      border: 2px solid rgb(231, 229, 255);
+    }
+  }
+}
+
+.button--share-url {
+  font-size: 0.8rem;
+  background-color: #eee;
+  border-radius: 3px;
+
+  @mixin atExtraSmall {
+    margin-top: 0.3rem;
+    width: 100%;
+    max-width: 15rem;
+  }
+}
+
+.results-footer-buttons {
+  text-align: right;
+  flex: 1 1 auto;
+  .btn {
+    margin: 0.1rem 0.3rem;
+  }
+}
+
+.form--submitvote .btn-success {
+  @mixin atSongSmall {
+    width: 100%;
+    margin-bottom: 0.7rem;
+  }
+}
+
+.form-buttons {
+  padding-top: 0.3rem;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap-reverse;
+
+  .btn-success {
+    @mixin atSongSmall {
+      width: 100%;
+    }
+  }
+  &__view-results {
+    margin-right: 0.3rem;
+    @mixin atSongSmall {
+      margin-right: 0;
+    }
+  }
+}
+
+
+
+.button--add-song {
+  @mixin atSongLarge{
+    position: relative;
+    top: 32px;
+  }
+}

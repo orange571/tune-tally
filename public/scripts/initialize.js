@@ -5,7 +5,7 @@ $(function(){
   var newSongs = [];
 
   function setupPoll (data) {
-    $('.ending-time').html("Poll ends <span class='bold'>" +  moment(data.deadline).fromNow() + "</span> on <span class='bold'>" + moment(data.deadline).format("MM/DD/YYYY hh:mmA") + "</span>");
+    $('.page-header__ending-time').html("Poll ends <span class='bold'>" +  moment(data.deadline).fromNow() + "</span> on <span class='bold'>" + moment(data.deadline).format("MM/DD/YYYY hh:mmA") + "</span>");
   }
 
   function addUserSubmittedSongToPoll () {
@@ -17,11 +17,11 @@ $(function(){
     newSongs.push(song);
     id = newSongCounter;
     var msg = "";
-    $(".registered-songs .empty-error").remove();
+    $(".registered-songs .poll-list__empty-error").remove();
     $('.user-submitted-songs').addClass('end-list');
     $('.registered-songs').removeClass('end-list');
-    msg += "<div class='song-item row'>";
-    msg += "<div class='song-item-info row'><div class='col-md-4'>" + song.artist + "</div><div class='col-md-7'>" + song.title + "</div></div>";
+    msg += "<div class='song-item'>";
+    msg += "<div class='song-item__info-wrapper song-item__info'><div class='col-md-4'>" + song.artist + "</div><div class='col-md-7'>" + song.title + "</div></div>";
     msg += "<div class='remove-container'><button class='btn btn-danger btn-sm remove-song'>Remove</button></div></div>";
     $('.user-submitted-songs').append(msg);
   }
@@ -62,7 +62,7 @@ $(function(){
     if($('.user-submitted-songs .song-item').length < 1){
       $('.user-submitted-songs').removeClass('end-list');
       $('.registered-songs').addClass('end-list');
-      $(".registered-songs").html('<div class="empty-error">No songs in this poll for now</div>');
+      $(".registered-songs").html('<div class="poll-list__empty-error">No songs in this poll for now</div>');
     }
   });
 
