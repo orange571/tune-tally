@@ -19,7 +19,7 @@
         <div class="poll-results">
             <div class="registered-songs end-list">
               <% if(data.songs.length === 0){ %>
-                <div class="list__empty-error">No songs in this poll for now</div>
+                <div class="poll-list__empty-error">No songs in this poll for now</div>
               <% } else { %>
                 <%data.songs.forEach(function(song){ %>
                   <div class="song-item--result">

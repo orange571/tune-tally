@@ -28,6 +28,8 @@
     flex-wrap: wrap;
     flex: 1 0 auto;
     margin: 0;
+    width: 100%;
+    padding: 0.3rem 0;
     @mixin atSongSmall {
       max-width: 100%
     }
@@ -97,7 +99,7 @@
   .song-item:last-child{
     border-bottom: none;
   }
-  .song-item-result:last-child {
+  .song-item--result:last-child {
     border-bottom: none;
   }
 }

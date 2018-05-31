@@ -939,6 +939,8 @@ a.logo-link:hover {
     flex-wrap: wrap;
     flex: 1 0 auto;
     margin: 0;
+    width: 100%;
+    padding: 0.3rem 0;
   }
 
 @media only screen and (max-width: 767px) {
@@ -1026,7 +1028,7 @@ a.logo-link:hover {
     border-bottom: none;
   }
 
-.end-list .song-item-result:last-child {
+.end-list .song-item--result:last-child {
     border-bottom: none;
   }
 
