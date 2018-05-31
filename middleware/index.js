@@ -39,10 +39,14 @@ middlewareObj.isBeforeDeadline = function(req, res, next) {
         if(req.isAuthenticated()){
           if(foundPoll.author.equals(req.user._id) || req.user.isAdmin) {
               next();
+          } else {
+            req.flash("error", "Deadline to vote has passed");
+            res.redirect("/polls/" + req.params.id + "/r");
           }
-        }
+        } else {
           req.flash("error", "Deadline to vote has passed");
           res.redirect("/polls/" + req.params.id + "/r");
+        }
       }
      }
   });
