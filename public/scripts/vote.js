@@ -76,7 +76,9 @@ $(function(){
     if($('.user-submitted-songs .song-item').length < 1){
       $('.user-submitted-songs').removeClass('end-list');
       $('.registered-songs').addClass('end-list');
-      $(".registered-songs").html('<div class="poll-list__empty-error">No songs in this poll for now</div>');
+      if($(".registered-songs .song-item").length < 1) {
+        $(".registered-songs").html('<div class="poll-list__empty-error">No songs in this poll for now</div>');
+      }
     }
   });
 
